@@ -1,0 +1,178 @@
+<h1>Formularios</h1>
+<form (ngSubmit)="onRegister()" #myForm="ngForm">
+  <div class="input-group">
+    <label for="name">Nombre</label>
+    <input type="text" name="name" required id="name" [(ngModel)]="register.name">
+    <p>Mesajes de error</p>
+  </div>
+  <div class="input-group">
+    <label for="email">Nombre</label>
+    <input type="email" name="email" required id="email" [(ngModel)]="register.email">
+    <p>Mesajes de error</p>
+  </div>
+  <div class="input-group">
+    <label for="password">Nombre</label>
+    <input type="password" name="password" required id="password" [(ngModel)]="register.password">
+    <p>Mesajes de error</p>
+  </div>
+  <button [disabled]="myForm.invalid" type="submit">Registrar</button>
+  <button type="button">Accion</button>
+</form>
+
+<hr>
+<h1>NgClass & NgStyle</h1>
+<!-- NgClass -->
+<input type="text" required #nameInput4="ngModel" [(ngModel)]="person.name">
+<hr class="line-error"
+[ngClass]="{
+  'valid': nameInput4.valid,
+  'invalid': nameInput4.invalid
+}" >
+<p class="message-error" [class.error]="nameInput4.invalid"><!-- el valor que esta despues de class. puede ser cualquier nombre -->
+  El campo es requerido
+</p>
+<!-- NgStyle -->
+<div class="mostrar">
+  <div>
+    <input type="number" [(ngModel)]="box.width">
+    <input type="number" [(ngModel)]="box.height">
+    <input type="color" [(ngModel)]="box.background">
+  </div>
+  <div [ngStyle]="{
+    'width.px': box.width,
+    'height.px': box.height,
+    'background-color': box.background,
+    'display': 'block'
+  }" ></div>
+</div>
+
+<hr>
+<h1>Class & Style</h1>
+<!-- Vamos a modificar el estilo pero utilizando clases -->
+<input type="text" required #nameInput2="ngModel" [(ngModel)]="person.name">
+<p class="message-error" [class.error]="nameInput2.invalid"><!-- el valor que esta despues de class. puede ser cualquier nombre -->
+  El campo es requerido
+</p>
+
+<!-- Vamos a modificar el estilo directamente sin crear clases -->
+<label for="">Nombre</label>
+<input type="text" required #nameInput3="ngModel" [(ngModel)]="person.name">
+<p [style.font-style]="nameInput3.invalid ? 'italic' : 'normal'">Text Texto Texto</p>
+
+<div class="mostrar">
+  <div>
+    <input type="text" [(ngModel)]="widthImg">
+  </div>
+  <div>
+    <img [style.width.%]="widthImg" [src]="person.avatar">
+  </div>
+</div>
+
+<hr>
+<h1>[ngSwitch]</h1>
+<input type="text" [(ngModel)]="person.name">
+<div [ngSwitch]="person.name">
+  <p *ngSwitchCase="'Nicolas'" >
+    La persona es Nicolas
+  </p>
+
+  <p *ngSwitchCase="'Delgado'">
+    La persona es Delgado
+  </p>
+
+  <p *ngSwitchCase="'Camilo'">
+    La persona es Camilo
+  </p>
+
+  <p *ngSwitchDefault>No hace match</p>
+</div>
+<!-- <p *ngIf="person.name === 'Nicolas'">
+  La persona es Nicolas
+</p>
+
+<p *ngIf="person.name === 'Delgado'">
+  La persona es Delgado
+</p>
+
+<p *ngIf="person.name === 'Camilo'">
+  La persona es Camilo
+</p> -->
+
+<hr>
+<h1>*ngFor Object</h1>
+<div class="products--grid">
+  <div *ngFor="let produc of products">
+    <img [src]="produc.imagenes" alt="Image">
+    <h2>{{ produc.price }}</h2>
+    <p>{{ produc.name }}</p>
+  </div>
+</div>
+
+<hr>
+<h1>*ngFor</h1>
+<input type="text" [(ngModel)]="newname">
+<button (click)="AddName()">Add Name</button>
+
+<ul>
+  <li *ngIf="this.names.length === 0">No hay Nombres</li>
+  <li *ngFor="let nombre of names; index as i" >  <!-- nombre es una variable cualquiera pero names es el array creado antes  -->
+    {{i}} {{ nombre }}   <!-- me va a imprimir el indice y el nombre de cada elemento del array -->
+  <button (click)="deletename(i)">Delete</button>
+  </li>
+</ul>
+
+<hr>
+<h1>*ngIf</h1>
+<input type="text" [(ngModel)]="person.name">
+<p *ngIf="person.name === 'Nicolas'">Soy Nicolas</p>
+<p *ngIf="person.name === 'Delgado'">Soy Delgado</p>
+
+<!-- Condicionales mas Complejas con *ngIf -->
+<input type="text" [(ngModel)]="person.name">
+<p *ngIf="person.name === 'Nicolas'">Soy Nicolas</p>
+<p *ngIf="person.name === 'Delgado' && person.age === 18;else myblock ">Soy Delgado</p>
+<ng-template #myblock>
+  <p>Bloque de Else</p>
+</ng-template>
+
+<hr>
+<h1>MgModel</h1>
+<p>Nombre {{person.name}}</p>
+<input type="text" required #nameInput="ngModel" [(ngModel)]="person.name">
+<p>Valid: {{ nameInput.valid }}</p>
+
+<p>Edad {{person.age}}</p>
+<input type="number" max="18" min="10" required #ageInput="ngModel" [(ngModel)]="person.age">
+<p>Valid: {{ ageInput.valid }}</p>
+
+<hr>
+<h1>Eventos</h1>
+<button [disabled]="btnDisabled">Enviar</button>
+<button (click)="toggleButton()" >Toggle Button</button>
+<p>Edad {{person.age}}</p>
+<button (click)="increaseage()" >Age ++</button>
+
+<div class="box" (scroll)="onscroll($event)">
+  <p>El perro (Canis familiaris o Canis lupus familiaris, dependiendo de si se lo considera una especie por
+    derecho propio o una subespecie del lobo),llamado perro doméstico o can,y en algunos lugares
+    coloquialmente llamado chucho,tuso,choco</p>
+</div>
+
+<input type="text" [value]="person.name" (keyup)="changename($event)">
+<p>Nombre {{person.name}}</p>
+
+<hr>
+<h1>Propiedades</h1>
+<button [disabled]="btnDisabled">Enviar</button>
+<input type="text" [value]="person.name">
+<progress max="100" [value]="person.age"></progress>
+<img width="100" [src]="person.avatar" alt="imagen2">
+
+<hr>
+<h1>Hola mundo</h1>
+<h2>{{ 'Hola mundo'.repeat(5) }}</h2>
+<p>3 + 3 = {{ 3 + 3 }}</p>
+<h3>Hola soy {{name}} y tengo {{age}}</h3>
+<img width="100" src={{img}} alt="imagen">
+<p>amigos de aaron {{amigos}}</p>
+
